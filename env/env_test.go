@@ -1,10 +1,14 @@
 package env
 
-import "testing"
+import (
+	"testing"
 
-func TestParse(t *testing.T) {
+	"github.com/numih/expr"
+)
+
+func TestGet(t *testing.T) {
 	tests := []struct {
-		expr     Expr
+		e        expr.Expr
 		expected string
 	}{
 		{"${VAR:default}", "default"},
@@ -20,8 +24,8 @@ func TestParse(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		t.Run(test.expr, func(t *testing.T) {
-			actual := Parse(test.expr)
+		t.Run(test.e, func(t *testing.T) {
+			actual := Get(test.e)
 			if actual != test.expected {
 				t.Errorf("expected %q, got %q", test.expected, actual)
 			}
