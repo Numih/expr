@@ -1,9 +1,16 @@
 package env
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/numih/expr"
+)
+
+const (
+	EnvVariableName = "ENV"
+	Development     = "development"
+	Production      = "production"
 )
 
 // Get parses an expression and substitutes environment variables. If the
@@ -26,4 +33,14 @@ func Get(e expr.Expr) string {
 		return value
 	}
 	return defaultValue
+}
+
+// IsDevelopment returns true if the environment is set to "development".
+func IsDevelopment() bool {
+	return Get(fmt.Sprintf("${%s}", EnvVariableName)) == Development
+}
+
+// IsProduction returns true if the environment is set to "production".
+func IsProduction() bool {
+	return Get(fmt.Sprintf("${%s}", EnvVariableName)) == Production
 }

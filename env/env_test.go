@@ -20,6 +20,7 @@ func TestGet(t *testing.T) {
 		{"${VAR:default:extra}", "default:extra"},
 		{"${:default}", "default"},
 		{"${:}", ""},
+		{"${}", ""},
 		{"${:default:extra}", "default:extra"},
 	}
 
