@@ -1,0 +1,21 @@
+name: Sync workspace pointer
+
+# Caller fino: a cada push na main deste repo, atualiza o ponteiro (gitlink)
+# deste submodulo dentro de Numih/workspace. A logica vive no workflow
+# reutilizavel central (mesmo padrao do autolabel.yml).
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  # Serializa commits seguidos DESTE repo e cancela bumps antigos, garantindo
+  # que o ultimo SHA empurrado seja o que fica no workspace.
+  group: sync-workspace
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    uses: Numih/.github/.github/workflows/sync-workspace-pointer.yml@v1
+    secrets:
+      WORKSPACE_SYNC_DEPLOY_KEY: ${{ secrets.WORKSPACE_SYNC_DEPLOY_KEY }}
